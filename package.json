@@ -1,0 +1,11 @@
+{
+  "name": "util-tray",
+  "version": "0.0.1",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "electron": "^11.2.0"
+  }
+}
