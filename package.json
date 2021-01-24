@@ -1,11 +1,13 @@
 {
-  "name": "util-tray",
+  "name": "tools-tray",
   "version": "0.0.1",
   "license": "MIT",
   "scripts": {
     "start": "electron ."
   },
   "dependencies": {
+    "asfw": "^2.2.0",
+    "edge": "^7.10.1",
     "electron": "^11.2.0"
   }
 }
