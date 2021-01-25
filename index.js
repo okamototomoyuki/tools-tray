@@ -8,6 +8,13 @@ const _PROF_NAME = ".tt_profile";
 
 let win = null
 
+// Mac のドックで閉じる処理
+let forceQuit = false;
+if (process.platform === 'darwin') {
+    app.on('before-quit', function () {
+        forceQuit = true;
+    });
+}
 /**
  * ウインドウ作成
  */
@@ -41,9 +48,12 @@ const createWindow = async () => {
                 const win = new BrowserWindow({ width: 1024, height: 768 })
                 win.loadURL(task)
                 win.on('close', (event) => {
-                    event.preventDefault()
-                    // 消すだけ
-                    win.hide()
+                    if (forceQuit == false) {
+                        // バツボタンを押した
+                        event.preventDefault()
+                        // 消すだけ
+                        win.hide()
+                    }
                 })
                 globalShortcut.register(hotKey, () => {
                     for (const other of wins) {
