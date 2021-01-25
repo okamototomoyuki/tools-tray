@@ -69,8 +69,13 @@ const createWindow = async () => {
                 globalShortcut.register(hotKey, () => {
 
                     if (args.length == 2) {
+
+                        let command = task;
+                        if (process.platform === 'darwin') {
+                            command = `open ${task}`;
+                        }
                         // なんどもプロセス実行
-                        exec(task);
+                        exec(command);
                     } else {
                         // すでにアプリ起動中ならそのアプリを前に出すだけ
                         const fileName = path.basename(task);
