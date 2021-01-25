@@ -2,7 +2,7 @@ const { app, BrowserWindow, globalShortcut } = require('electron')
 const fs = require('fs');
 const path = require('path');
 const { exec } = require('child_process')
-const { edge } = require('edge')
+// const { edge } = require('edge')
 
 const _PROF_NAME = ".tt_profile";
 
@@ -12,6 +12,7 @@ let win = null
  * ウインドウ作成
  */
 const createWindow = async () => {
+
     //指定したファイルを読み込む
     let data = null
     const homePath = process.env[process.platform == "win32" ? "USERPROFILE" : "HOME"];
@@ -130,8 +131,18 @@ public class StartUp
         }
     }
 }
-
 app.on('ready', createWindow)
+// 新しいウインドウはデフォルトブラウザ ※書かないと electron のウインドウで起動する
+app.on('web-contents-created', (e, contents) => {
+    contents.on('new-window', (e, url) => {
+        e.preventDefault();
+        require('open')(url);
+    });
+    contents.on('will-navigate', (e, url) => {
+        if (url !== contents.getURL()) e.preventDefault(), require('open')(url);
+    });
+});
+
 app.on('will-quit', () => {
     // ショートカットキー全解除
     globalShortcut.unregisterAll()
